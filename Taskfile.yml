@@ -1,0 +1,11 @@
+version: '3'
+
+tasks:
+  start-databases:
+    cmd: docker-compose up -d
+  
+  refresh-databases:
+    cmd: docker-compose down && docker-compose up -d
+  
+  mock-data:
+    cmd: python src/dev_samples/mockdata/mockdata.py -n {{.rows | default "50"}}
