@@ -64,8 +64,7 @@ DEV_POSTGRES_DB=dev_db
 CPROD_POSTGRES_USER=postgres
 CPROD_POSTGRES_PASSWORD=password
 CPROD_POSTGRES_DB=cprod_db
-# The developers name used to prefix dedicated dev schema 
-DEV_NAME=myname
+DEV_NAME=myname # The developers name used to prefix dedicated dev schema  
 ```
 
 ### 3. Generate Mock Data
