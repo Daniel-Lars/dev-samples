@@ -1,35 +1,33 @@
 version: '3'
 
+dotenv: ['.env']
+
 tasks:
-  start-databases:
+  docker:database:start:
     desc: Starting docker containers with postgres databases
     preconditions:
       - sh: test -f ./docker-compose.yml 
         msg: Docker compose file not found! 
     cmd: docker-compose up -d
   
-  refresh-databases:
+  docker:database:refresh:
     desc: Refreshes the databases by taking the docker containers down and restarting them. Deletes all data. 
     cmd: docker-compose down && docker-compose up -d
 
-  destroy-databases:
+  docker:database:destroy:
     desc: Takes down the docker containers running the databases. Deletes all data. 
     cmds: 
       - docker-compose down
       - echo "databases kaputt" 
 
-  set-env-vars:
-    desc: loads .env variables into current shell session
-    preconditions:
-      - sh: test -f .env
-        msg: .env file not found! 
-
-  mock-data:
-    desc: Generates mock data and writes it to the databases. Rows parameter specifies number of rows. 
-    deps: 
-      - set-env-vars
+  data:mock-data:
+    desc: > 
+      Generates mock data and writes it to the databases. Rows parameter specifies number of rows.
+    dir: /Users/danielwendel/code/dev-samples
     preconditions:
       - sh: docker ps --filter "name=postgres" --filter "status=running" --format '{{.Names}}' | grep postgres
         msg: No running postgres database found. Run start-databases first.
+    vars:
+      rows: '{{.rows | default "50"}}'
     cmds: 
-      - python src/dev_samples/mockdata/mockdata.py -n {{.rows | default "50"}}
+      - ./.venv/bin/python src/dev_samples/mockdata/mockdata.py -n {{.rows}}

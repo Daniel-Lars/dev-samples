@@ -18,3 +18,5 @@ logs/
 ### dotenv ###
 .env
 dbt_dev_samples/.user.yml
+
+.task
