@@ -23,11 +23,10 @@ tasks:
   data:mock-data:
     desc: > 
       Generates mock data and writes it to the databases. Rows parameter specifies number of rows.
-    dir: /Users/danielwendel/code/dev-samples
     preconditions:
       - sh: docker ps --filter "name=postgres" --filter "status=running" --format '{{.Names}}' | grep postgres
         msg: No running postgres database found. Run start-databases first.
     vars:
       rows: '{{.rows | default "50"}}'
     cmds: 
-      - ./.venv/bin/python src/dev_samples/mockdata/mockdata.py -n {{.rows}}
+      - python src/dev_samples/mockdata/mockdata.py -n {{.rows}}

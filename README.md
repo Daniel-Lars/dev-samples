@@ -34,6 +34,7 @@ dev-samples/
 - Python 3.12+
 - [uv](https://github.com/astral-sh/uv) or pip for dependency management
 - dbt-core (installed via Python dependencies)
+- [taskfile] (https://taskfile.dev/docs/installation)
 
 ### 2. Setup
 
@@ -48,7 +49,7 @@ pip install -r pyproject.toml
 #### Start PostgreSQL databases
 
 ```sh
-task start-databases
+task docker:database:start
 # or manually:
 docker-compose up -d
 ```
@@ -73,7 +74,7 @@ Populate the dev database with fake user signup data:
 
 ```sh
 # creates 50 rows of mock data, can be customized with the argument rows=n 
-task mock-data
+task data:mock-data
 # or manually:
 python src/dev_samples/mockdata/mockdata.py -n 100
 ```
